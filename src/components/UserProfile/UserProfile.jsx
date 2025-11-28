@@ -1,15 +1,19 @@
-import React, { useContext, useEffect } from 'react'
-import { UserContext } from '../../Context/UserContext.jsx'
 import bgProfile from '../../../public/bg-profile.png'
 
 import ButtonView from '../ButtonView/ButtonView.jsx'
+import UserProfileHook from '../../Hooks/UserProfileHook.jsx'
+import LoadingButtons from '../LoadingButtons/LoadingButtons.jsx'
 
 export default function UserProfile() {
-  let { UserLoggedIn, getUserLoggedIn } = useContext(UserContext)
-  useEffect(() => {
-    getUserLoggedIn()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [  ])
+  let { data, isLoading, error } = UserProfileHook()
+
+  if (isLoading) {
+    return <div className='flex items-center justify-center '> <LoadingButtons /></div>
+  }
+
+  if (error) {
+    return <div className='text-red-500 flex items-center justify-center h-screen'>{error.message}</div>
+  }
 
 
   return (
@@ -20,15 +24,15 @@ export default function UserProfile() {
         </div>
         <div className='relative flex flex-col items-center text-center gap-4'>
           <div className='w-24 h-24 ring-4 ring-[#1A1A1A] rounded-2xl overflow-hidden'>
-            <img src={UserLoggedIn?.photo} alt={UserLoggedIn?.name} className='w-full h-full object-cover' />
+            <img src={data?.photo} alt={data?.name} className='w-full h-full object-cover' />
           </div>
-          <h2 className='text-2xl font-bold'>{UserLoggedIn?.name}</h2>
-          <p className='text-sm text-white/70'>{UserLoggedIn?.email}</p>
+          <h2 className='text-2xl font-bold'>{data?.name}</h2>
+          <p className='text-sm text-white/70'>{data?.email}</p>
           <article className='bg-white/10 rounded-xl px-4 py-3 text-sm leading-relaxed'>
             <p>
               ✨ Hello I'm
               <span className='text-blue-400 mx-1 font-semibold'>
-                {UserLoggedIn?.name}
+                {data?.name}
               </span>
               Full Stack Developer ✨
             </p>
@@ -51,21 +55,21 @@ export default function UserProfile() {
           >
 
             <div className='w-[135px] ring-8 ring-[#1A1A1A] h-[135px] rounded-xl absolute top-[-20%] left-[50%] translate-x-[-50%] overflow-hidden ' >
-              <img src={UserLoggedIn?.photo} alt={UserLoggedIn?.name} className='w-full h-full object-cover ' />
+              <img src={data?.photo} alt={data?.name} className='w-full h-full object-cover ' />
             </div>
 
             {/* user name and email */}
 
             <div className='text-center relative top-[100px]'>
-              <h2 className='text-2xl font-bold text-white'>{UserLoggedIn?.name}</h2>
-              <p className='text-sm text-white/50'>{UserLoggedIn?.email}</p>
+              <h2 className='text-2xl font-bold text-white'>{data?.name}</h2>
+              <p className='text-sm text-white/50'>{data?.email}</p>
 
 
               <article className='relative mt-3 flex flex-col items-center justify-end  rounded-2xl'>
                 <h3 className='text-white text-xl font-bold text-center'  >
                   ✨  Hello I'm
                   <span className='text-blue-500 mx-2 text-xl font-bold'>
-                    {UserLoggedIn?.name}
+                    {data?.name}
 
                   </span>
                   Full Stack Developer ✨

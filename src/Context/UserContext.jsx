@@ -19,7 +19,7 @@ function UserContextProvider(props) {
                 setUserLoggedIn(res.data.user)
             }
         }).catch((err) => {
-            console.log(err);
+            console.log(err.message , 'error in get user logged in');
         })
     }
 

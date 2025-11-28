@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { PostContext } from '../../Context/PostContext.jsx'
+import React, {  useState } from 'react'
 import { AiOutlineLike } from 'react-icons/ai';
 import UserProfile from '../UserProfile/UserProfile.jsx';
 import LoadingPage from '../LoadingPage/LoadingPage.jsx';
 import { RiMenuFold2Line } from 'react-icons/ri';
+import usePosts from '../../Hooks/Posts.jsx';
 
 export default function Home() {
-  let { getPosts, Post, Loading } = useContext(PostContext)
+  let { data, isLoading, error } = usePosts()
   let [showComments, setShowComments] = useState(false)
   let [SideMenu, setSideMenu] = useState(false)
 
@@ -14,11 +14,7 @@ export default function Home() {
     ? 'translate-x-0 opacity-100 pointer-events-auto'
     : 'translate-x-full opacity-0 pointer-events-none'
 
-  useEffect(() => {
-    getPosts();
-    console.log(Post);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [  ]);
+ 
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -37,13 +33,13 @@ export default function Home() {
       return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
     }
   };
-  if (Loading) {
+  if (isLoading) {
     return <LoadingPage />
   }
 
   return (
     <>
-      <div className='md:hidden size-10 self-start mt-5 shadow-lg bg-white rounded-full flex items-center justify-center'>
+      <div className='md:hidden ms-4 animate-pulse size-10 self-start mt-5 shadow-lg bg-white rounded-full flex items-center justify-center'>
         <RiMenuFold2Line className='text-black text-2xl cursor-pointer' onClick={() => setSideMenu(!SideMenu)} />
       </div>
 
@@ -75,7 +71,7 @@ export default function Home() {
 
 
         <div className="max-w-2xl  mx-auto space-y-6 md:w-1/2 xl:w-full  w-full  ">
-          {Post?.map((post, index) => (
+          {data?.map((post, index) => (
             <article
               key={index}
               className="bg-[#282828] rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border "
@@ -156,9 +152,9 @@ export default function Home() {
             </article>
           ))}
 
-          {!Post || Post.length === 0 && (
+          {!data || data.length === 0 && (
             <div className="text-center py-12">
-              <p className="text-gray-500 text-lg">No posts yet. Be the first to share something!</p>
+              <p className="text-gray-500 text-lg">{error}</p>
             </div>
           )}
         </div>

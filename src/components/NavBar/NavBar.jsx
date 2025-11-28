@@ -52,7 +52,7 @@ export default function NavBar() {
             py-4 md:py-0
             gap-4 md:gap-8
           `}>
-            <li className='flex  w-[10%] justify-center items-center'>
+            <li className='flex  md:w-[10%] w-full justify-center items-center'>
               <NavLink
                 to='/home'
                 onClick={() => setIsMobileMenuOpen(false)}
@@ -65,7 +65,7 @@ export default function NavBar() {
                 <FaHome />
               </NavLink>
             </li>
-            <li className='flex  w-[10%] justify-center items-center'>
+            <li className='flex  md:w-[10%] w-full justify-center items-center'>
               <NavLink
                 to='/friends'
                 onClick={() => setIsMobileMenuOpen(false)}
@@ -78,7 +78,7 @@ export default function NavBar() {
                 <FaUserFriends />
               </NavLink>
             </li>
-            <li className='flex  w-[10%] justify-center items-center'>
+            <li className='flex  md:w-[10%] w-full justify-center items-center'>
               <NavLink
                 onClick={() => {
                   logOut();

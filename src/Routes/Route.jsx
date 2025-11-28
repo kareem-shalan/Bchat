@@ -7,8 +7,11 @@ import Home from './../components/Home/Home';
 import Layout from './../components/Layout/Layout';
 import { UserContextProvider } from '../Context/UserContext.jsx';
 import GardRoutes from './../components/GardRoutes/GardRoutes';
-import PostContextProvider from '../Context/PostContext.jsx';
 import Profile from './../components/Profile/Profile';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
+const query = new QueryClient();
 
 
 export default function Route() {
@@ -55,15 +58,18 @@ export default function Route() {
 
 
         <UserContextProvider>
-            <PostContextProvider>
+           
+                <QueryClientProvider client={query}>
 
-                <RouterProvider
-                    router={routes}
-                >
+                    <RouterProvider
+                        router={routes}
+                    >
 
-                </RouterProvider>
+                    </RouterProvider>
+                    <ReactQueryDevtools/>
+                </QueryClientProvider>
 
-            </PostContextProvider>
+            
 
         </UserContextProvider>
 
