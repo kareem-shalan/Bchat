@@ -9,7 +9,7 @@ export default function UserProfile() {
   useEffect(() => {
     getUserLoggedIn()
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ UserLoggedIn ])
+  }, [  ])
 
 
   return (
