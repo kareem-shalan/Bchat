@@ -116,7 +116,7 @@ export default function Home() {
                     </svg>
                     {/* comments+ likes */}
                     <div className="flex items-center justify-between
-                   gap-2 w-[270px] xl:max-w-full mb-1">
+                   gap-2 w-full  mb-1">
                       <span
                         onClick={() => setShowComments(!showComments)}
                         className="font-medium text-white cursor-pointer">{post.comments?.length || 0} comments</span>
