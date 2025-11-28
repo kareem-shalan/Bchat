@@ -18,7 +18,7 @@ export default function Home() {
     getPosts();
     console.log(Post);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [ Post ]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
