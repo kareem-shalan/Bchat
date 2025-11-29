@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import UserProfileHook from '../../Hooks/UserProfileHook.jsx'
 import EditeButton from '../EditeButton/EditeButton.jsx'
 import LoadingButtons from '../LoadingButtons/LoadingButtons.jsx'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import ratioProfile from '../../../public/ratioProfile.png'
 import Input from '../Input/Input.jsx'
 import UserPosts from './../UserPosts/UserPosts';
@@ -22,7 +22,7 @@ export default function Profile() {
   
   return (
     <>
-    <main className='flex items-center justify-between w-full h-[80vh] md:h-full gap-4 mb-10 flex-col md:flex-row'>
+    <main className='flex items-center justify-between w-full  md:h-full gap-4 mb-10 flex-col md:flex-row '>
 
 
       <div className='w-1/2  flex items-center justify-center'>
@@ -57,37 +57,45 @@ export default function Profile() {
 
       {/* profile nav */}
 
-      <div className='w-1/2  '>
+      <div className='w-full   '>
 
 
         <div className='flex items-center justify-between flex-col underline'>
 
 
-          <div className='w-full'>
-            <ul className='w-full  flex items-center justify-between 
-  text-amber-500 font-bold text-2xl gap-4 mb-2 '>
-              <Link to='/home'>
+          <div className='w-full '>
+            <ul className='w-[80%]  flex items-center justify-between 
+  text-amber-500 font-bold text-xl gap-2 mb-2 mx-auto'>
+              <NavLink to='/home' className={({ isActive }) =>
+                isActive
+                  ? 'text-yellow-300'
+                  : 'text-white'
+              }>
 
                 <p>Home</p>
-              </Link>
-              <Link to='/'>
+              </NavLink>
+              <NavLink to='/' className={({ isActive }) =>
+                isActive
+                  ? 'text-yellow-300'
+                  : 'text-white'
+              }>
 
                 <p>Posts</p>
-              </Link>
+              </NavLink>
 
 
 
             </ul>
           </div>
           {/* profile ratio */}
-          <div>
+          <div className='w-full h-full'>
             <img src={ratioProfile} alt="ratioProfile" className='w-full h-full object-cover ' />
           </div>
 
           {/* INPUTS EDITEING */}
 
 
-          <div className={`transition-all duration-300 ease-in-out w-full flex flex-col gap-2 mt-10 ${ShowEditeInputs ? 'opacity-100' : 'opacity-0'}`}>
+          <div className={`transition-all items-center justify-center md:justify-start md:items-start duration-300 ease-in-out w-full flex flex-col gap-2 mt-10 ${ShowEditeInputs ? 'opacity-100' : 'opacity-0'}`}>
             <Input
               type='text'
               placeholder='Name'
