@@ -10,6 +10,7 @@ import GardRoutes from './../components/GardRoutes/GardRoutes';
 import Profile from './../components/Profile/Profile';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { Toaster } from 'react-hot-toast';
 
 const query = new QueryClient();
 
@@ -66,6 +67,7 @@ export default function Route() {
                     >
 
                     </RouterProvider>
+                    <Toaster position="top-center" />
                     <ReactQueryDevtools/>
                 </QueryClientProvider>
 

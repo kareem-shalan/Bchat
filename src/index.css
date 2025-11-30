@@ -9,6 +9,7 @@
 
 body {
   background-color: #1A1A1A;
+ 
 }
 .checked-radio input[type="radio"]:checked + label {
   background-color: red;

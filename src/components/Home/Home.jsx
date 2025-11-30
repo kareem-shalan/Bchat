@@ -1,20 +1,26 @@
-import React, {  useState } from 'react'
+import React, { useState } from 'react'
 import { AiOutlineLike } from 'react-icons/ai';
 import UserProfile from '../UserProfile/UserProfile.jsx';
 import LoadingPage from '../LoadingPage/LoadingPage.jsx';
 import { RiMenuFold2Line } from 'react-icons/ri';
 import usePosts from '../../Hooks/Posts.jsx';
+import Input from './../Input/Input';
+import CommentForm from '../CommentForm/CommentForm.jsx';
+import CreatePost from '../CreatePost/CreatePost.jsx';
+
+
 
 export default function Home() {
   let { data, isLoading, error } = usePosts()
-  let [showComments, setShowComments] = useState(false)
+  let [showComments, setShowComments] = useState('')
   let [SideMenu, setSideMenu] = useState(false)
+
 
   const mobileProfilePanelClasses = SideMenu
     ? 'translate-x-0 opacity-100 pointer-events-auto'
     : 'translate-x-full opacity-0 pointer-events-none'
 
- 
+
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -71,6 +77,10 @@ export default function Home() {
 
 
         <div className="max-w-2xl  mx-auto space-y-6 md:w-1/2 xl:w-full  w-full  ">
+
+          <div className='w-full h-full'>
+            <CreatePost />
+          </div>
           {data?.map((post, index) => (
             <article
               key={index}
@@ -103,38 +113,47 @@ export default function Home() {
                   />
                 )}
 
-                <footer className="  flex  items-center gap-6 pt-4 border-t border-gray-100 text-sm text-gray-600">
-                  <div className="flex items-center gap-2">
+                <footer className="  flex flex-col mb-5
+                md:flex-row md:mb-0
+                  items-center gap-6 pt-4 border-t border-gray-100 text-sm text-gray-600">
+                  <div className="flex items-center gap-2 w-full md:w-1/2">
                     <svg
-                      onClick={() => setShowComments(!showComments)}
+                      onClick={() => setShowComments(post._id)}
                       className="w-5 h-5 cursor-pointer text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                     </svg>
                     {/* comments+ likes */}
-                    <div className="flex items-center justify-between
-                   gap-2 w-full  mb-1">
+                    <div className="flex w-1/2 items-center justify-between
+                   gap-2 whitespace-nowrap  mb-1">
                       <span
-                        onClick={() => setShowComments(!showComments)}
+                        onClick={() => setShowComments(prev => ({ ...prev, [post._id]: !prev[post._id] }))}
                         className="font-medium text-white cursor-pointer">{post.comments?.length || 0} comments</span>
 
                       <span className="font-medium text-blue-500 flex items-center gap-1 justify-center">{post.likes?.length || 0} <AiOutlineLike /></span>
                     </div>
+
                   </div>
+                  {/* Add Comment */}
+
+                  <CommentForm
+                    postId={post._id}
+
+                  />
 
 
                 </footer>
                 {/* show comments */}
-                <div className={`flex flex-col gap-2 mt-2 ${showComments ? 'block' : 'hidden'}`}>
-                  {post.comments?.slice(0, 10).map((comment, index) => (
-                    <div key={index} className="flex items-center gap-2">
+                <div className={` flex flex-col gap-2 mt-2 ${showComments[post._id] ? 'block' : 'hidden'} `}>
+                  {post.comments?.slice(0, 10)?.map((comment, index) => (
+                    <div key={index} className={`flex items-center gap-2 ${showComments[post._id] ? 'block' : 'hidden'}`}>
                       {post.image && (
                         <img
                           src={post.user?.photo || 'https://linked-posts.routemisr.com/uploads/default-profile.png'}
                           alt={post.user?.name}
-                          className="w-12 h-12 rounded-full object-cover ring-4 ring-blue-100"
+                          className="size-6 md:size-12 rounded-full object-cover ring-4 ring-blue-100"
                         />
                       )}
-                      <p className='bg-amber-300/40 py-3 px-6 min-w-[400px] rounded-full'>
+                      <p className='bg-amber-300/40 py-3 px-6 min-w-[190px] rounded-full text-sm md:text-base'>
                         <span className=' font-extrabold text-black '>
 
                           {comment?.commentCreator?.name}

@@ -5,11 +5,13 @@ import { IoLogOut } from 'react-icons/io5';
 import { HiMenu, HiX } from 'react-icons/hi';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import ResgisterImg from '../../../public/iconRegister.png'
+import UserProfileHook from '../../Hooks/UserProfileHook.jsx';
 
 export default function NavBar() {
   const navigate = useNavigate();
   const { Token, setToken } = useContext(UserContext);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { data: userProfile } = UserProfileHook();
 
   const logOut = () => {
     localStorage.removeItem('UserToken');
@@ -65,19 +67,7 @@ export default function NavBar() {
                 <FaHome />
               </NavLink>
             </li>
-            <li className='flex  md:w-[10%] w-full justify-center items-center'>
-              <NavLink
-                to='/friends'
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={({ isActive }) =>
-                  isActive
-                    ? 'flex w-[50%] items-center justify-center text-2xl rounded-full p-1 bg-yellow-400 text-white shadow-lg shadow-yellow-500/50 transform scale-110 transition-all duration-300'
-                    : 'flex w-[50%] items-center justify-center text-2xl rounded-full p-1 bg-white text-gray-700 hover:bg-linear-to-br hover:from-yellow-400 hover:to-orange-500 hover:text-white hover:shadow-lg hover:shadow-yellow-500/50 hover:scale-110 transform transition-all duration-300 shadow-md'
-                }
-              >
-                <FaUserFriends />
-              </NavLink>
-            </li>
+          
             <li className='flex  md:w-[10%] w-full justify-center items-center'>
               <NavLink
                 onClick={() => {
@@ -95,6 +85,21 @@ export default function NavBar() {
               </NavLink>
             </li>
           </ul>
+
+          {/* User Info - Left Side */}
+          <div className="flex items-center gap-3">
+            <div className="hidden md:flex flex-col items-end">
+              <span className="text-white font-semibold text-sm">{userProfile?.name || 'User'}</span>
+            </div>
+            <div className="relative">
+              <img
+                src={userProfile?.photo || 'https://linked-posts.routemisr.com/uploads/default-profile.png'}
+                alt={userProfile?.name || 'User'}
+                className="w-10 h-10 rounded-full object-cover ring-2 ring-[#FFFD02] focus:ring-4 focus:ring-[#FFFD02] transition-all duration-300 cursor-pointer hover:ring-4 hover:ring-[#FFFD02]"
+              />
+              <span className="absolute top-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-[#282828] animate-pulse"></span>
+            </div>
+          </div>
 
           {/* Mobile Menu Toggle Button */}
           <button

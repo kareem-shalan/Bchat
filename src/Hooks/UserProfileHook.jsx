@@ -19,9 +19,10 @@ const { data, isLoading, error } = useQuery(
         staleTime: 1000 * 60 * 5, // 5 minutes
         gcTime: 8*1000, //8 seconds
         
+        
     }
 )
     
   return { data: data?.data?.user, isLoading, error }
 }
-export { UserProfileHook }
+export { UserProfileHook  }
